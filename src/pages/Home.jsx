@@ -17,15 +17,18 @@ import {
 function Home() {
   const dispatch = useDispatch();
 
+  // get data from redux
   const { photos, page } = useSelector((state) => state.images);
 
+  // for search input value
   const [search, setSearch] = useState("");
-  const [url, setUrl] = useState("");
 
+  // at first load get images
   useEffect(() => {
     getImages();
   }, []);
 
+  // search the image after 1 sec
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       getImages();
@@ -35,6 +38,8 @@ function Home() {
     return () => clearTimeout(delayDebounce);
   }, [search]);
 
+  // if search value is there then exectue search query or else
+  // get recent images
   const getImages = () => {
     if (search) {
       dispatch(getRecentImages(page, search));

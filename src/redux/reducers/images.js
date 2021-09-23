@@ -1,5 +1,6 @@
 import { EMPTY_IMAGES, GET_IMAGES, SAVE_HISTORY } from "../types";
 
+// intitial state for images
 const initialState = {
   page: 0,
   photos: [],
