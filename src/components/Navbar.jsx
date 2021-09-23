@@ -1,6 +1,6 @@
 import React from "react";
 
-function Navbar() {
+function Navbar({ search, setSearch, setImages }) {
   return (
     <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -12,10 +12,9 @@ function Navbar() {
             type="search"
             placeholder="Search"
             aria-label="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="btn btn-outline-success" type="submit">
-            Search
-          </button>
         </form>
       </div>
     </nav>
