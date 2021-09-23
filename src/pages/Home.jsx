@@ -8,7 +8,11 @@ import Loader from "../components/Loader";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getRecentImages } from "../redux/actions/images";
+import {
+  getHistory,
+  getRecentImages,
+  saveHistory,
+} from "../redux/actions/images";
 
 function Home() {
   const dispatch = useDispatch();
@@ -16,6 +20,7 @@ function Home() {
   const { photos, page } = useSelector((state) => state.images);
 
   const [search, setSearch] = useState("");
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
     getImages();
@@ -23,16 +28,19 @@ function Home() {
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
-      search && dispatch(getRecentImages(page, search));
-    }, 3000);
+      getImages();
+      saveHistory(search);
+    }, 1000);
 
     return () => clearTimeout(delayDebounce);
   }, [search]);
 
   const getImages = () => {
-    search
-      ? dispatch(getRecentImages(page, search))
-      : dispatch(getRecentImages(page));
+    if (search) {
+      dispatch(getRecentImages(page, search));
+    } else {
+      dispatch(getRecentImages(page));
+    }
   };
 
   return (

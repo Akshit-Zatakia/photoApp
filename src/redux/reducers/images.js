@@ -1,4 +1,4 @@
-import { EMPTY_IMAGES, GET_IMAGES } from "../types";
+import { EMPTY_IMAGES, GET_IMAGES, SAVE_HISTORY } from "../types";
 
 const initialState = {
   page: 0,
@@ -20,6 +20,7 @@ export default function (state = initialState, action) {
         page: 0,
         photos: [],
       };
+
     default:
       return state;
   }
