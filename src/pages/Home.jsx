@@ -15,20 +15,29 @@ function Home() {
 
   const { photos, page } = useSelector((state) => state.images);
 
-  const [images, setImages] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     getImages();
   }, []);
 
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      search && dispatch(getRecentImages(page, search));
+    }, 3000);
+
+    return () => clearTimeout(delayDebounce);
+  }, [search]);
+
   const getImages = () => {
-    dispatch(getRecentImages(page));
+    search
+      ? dispatch(getRecentImages(page, search))
+      : dispatch(getRecentImages(page));
   };
 
   return (
     <div>
-      <Navbar setSearch={setSearch} search={search} setImages={setImages} />
+      <Navbar setSearch={setSearch} search={search} />
       <div className="container m-20">
         <InfiniteScroll
           dataLength={photos.length}
